@@ -15,6 +15,8 @@
 #include <fstream>
 #include <sstream>
 
+// TEST COMMENT
+
 class Model {
 	public:
 		Model(std::vector<float> positions, std::vector<float> textures, std::vector<uint32_t> indices)
