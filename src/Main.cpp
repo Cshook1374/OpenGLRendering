@@ -2,8 +2,10 @@
 #include <GLFW/glfw3.h>
 
 #include "Model.hpp"
+#include "Texture.hpp"
 #include "Shader.hpp"
 #include "Renderer.hpp"
+#include "Input.hpp"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -50,13 +52,21 @@ int main(void) {
 	};
 
 	Model model(positions, textures, indices);
+	Transform transform(glm::vec3(0, 0, -1), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
+	Camera camera(70, 0.01, 100);
 	Renderer renderer;
-	Shader shader("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
+	Texture texture("../res/textures/grass.jpg", 0);
+	Shader shader(transform, camera, "shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
+	Input input;
 
 	while (glfwWindowShouldClose(window) == GLFW_FALSE) {
+		input.processKeyboardInput(window);
+		camera.calculateMatrices();
 		renderer.prepare(glm::vec4(1, 0, 0, 1));
 		shader.start();
+		texture.bindTexture();
 		renderer.render(model);
+		texture.unbindTexture();
 		shader.stop();
 
 		glfwSwapBuffers(window);

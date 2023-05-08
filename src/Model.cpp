@@ -7,6 +7,7 @@ Model::Model(std::vector<float> positions, std::vector<float> textures, std::vec
         bindIndexBuffer(indices);
         storeDataIntoAttributeList(0, 3, positions);
         storeDataIntoAttributeList(1, 2, textures);
+        glBindVertexArray(0);
 }
 
 void Model::bindIndexBuffer(std::vector<uint32_t> indices) {
